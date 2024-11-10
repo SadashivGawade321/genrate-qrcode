@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator for Attendance</title>
+  <!-- Include QRCode.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://dbatu.ac.in/wp-content/uploads/2023/08/YcgHd1ci.jpeg'); /* External image URL */
+      background-size: cover; /* Ensures the background covers the entire page */
+      background-position: center center; /* Centers the image */
+      background-attachment: fixed; /* Keeps the image fixed while scrolling */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh; /* Full height of the viewport */
+      margin: 0;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for the form */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #qrcode {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Generate QR Code</h1>
+    <form id="qrForm">
+      <input type="text" id="studentName" placeholder="Enter Student Name" required>
+      <input type="text" id="prnNumber" placeholder="Enter PRN Number" required>
+      <button type="submit">Generate QR Code</button>
+    </form>
+    <div id="qrcode"></div>
+  </div>
+
+  <script>
+    // Handle the form submission
+    document.getElementById('qrForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Retrieve input values
+      const studentName = document.getElementById('studentName').value.trim();
+      const prnNumber = document.getElementById('prnNumber').value.trim();
+
+      // Check if all fields are filled
+      if (!studentName || !prnNumber) {
+        alert("Please fill all the fields.");
+        return;
+      }
+
+      // Format the data for the QR code
+      const data = `${studentName},${prnNumber}`;
+
+      // Clear previous QR code
+      document.getElementById('qrcode').innerHTML = '';
+
+      // Generate the new QR code
+      new QRCode(document.getElementById("qrcode"), {
+        text: data,
+        width: 128,
+        height: 128,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    });
+  </script>
+</body>
+</html>
